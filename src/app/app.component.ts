@@ -53,11 +53,6 @@ export class AppComponent {
     { "name": "Chilton" },
     { "name": "Angelo" },
     { "name": "Carita" },
-    { "name": "Wernher" },
-    { "name": "Danella" },
-    { "name": "Harli" },
-    { "name": "Ricky" },
-    { "name": "Eugenie" },
-    { "name": "Godfrey" }
+    { "name": "Wernher" }
   ]
 }
