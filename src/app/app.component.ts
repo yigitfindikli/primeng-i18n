@@ -21,6 +21,14 @@ export class AppComponent implements OnDestroy {
 
     subscription: Subscription;
 
+    customers = [
+        { "name": "Yancey" },
+        { "name": "Chilton" },
+        { "name": "Angelo" },
+        { "name": "Carita" },
+        { "name": "Wernher" }
+    ]
+
     constructor(public translate: TranslateService, public primeNGConfig: PrimeNGConfig, private confirmationService: ConfirmationService) {
         translate.addLangs(['en', 'fr']);
         translate.setDefaultLang('en');
@@ -57,12 +65,4 @@ export class AppComponent implements OnDestroy {
             this.subscription.unsubscribe();
         }
     }
-
-    customers = [
-        { "name": "Yancey" },
-        { "name": "Chilton" },
-        { "name": "Angelo" },
-        { "name": "Carita" },
-        { "name": "Wernher" }
-    ]
 }
