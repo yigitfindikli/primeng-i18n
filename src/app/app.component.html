@@ -1,64 +1,64 @@
 <div class="p-d-flex p-ai-center p-jc-between p-mt-3">
-	<div class="p-col-6">
-		<h2 class="p-ml-3">{{ 'demo.greetings' | translate }}</h2>
-	</div>
-	<div class="p-d-flex p-col-6 p-jc-end">
-		<div class="p-mr-3">
-			<p-radioButton (ngModelChange)="changeLang($event)" name="language" value="en" [(ngModel)]="lang"
-				inputId="en"></p-radioButton>
-			<label class="p-ml-1" for="en">{{ 'demo.en' | translate }}</label>
-		</div>
-		<div class="p-mr-3">
-			<p-radioButton (ngModelChange)="changeLang($event)" name="language" value="fr" [(ngModel)]="lang"
-				inputId="fr"></p-radioButton>
-			<label class="p-ml-1" for="fr">{{ 'demo.fr' | translate }}</label>
-		</div>
-	</div>
+    <div class="p-col-6">
+        <h2 class="p-ml-3">{{ 'demo.greetings' | translate }}</h2>
+    </div>
+    <div class="p-d-flex p-col-6 p-jc-end">
+        <div class="p-mr-3">
+            <p-radioButton (ngModelChange)="changeLang($event)" name="language" value="en" [(ngModel)]="lang"
+                inputId="en"></p-radioButton>
+            <label class="p-ml-1" for="en">{{ 'demo.en' | translate }}</label>
+        </div>
+        <div class="p-mr-3">
+            <p-radioButton (ngModelChange)="changeLang($event)" name="language" value="fr" [(ngModel)]="lang"
+                inputId="fr"></p-radioButton>
+            <label class="p-ml-1" for="fr">{{ 'demo.fr' | translate }}</label>
+        </div>
+    </div>
 </div>
 
 <div class="p-fluid p-formgrid p-grid p-jc-center p-mt-3 p-mr-0">
-  <div class="p-col-6">
-    <div class="p-field p-col-12">
-        <label for="date">{{ 'demo.date' | translate }}</label>
-        <p-calendar inputId="date" [(ngModel)]="date"></p-calendar>
-    </div>
-    <div class="p-field p-col-12">
-        <label for="empty">{{ 'demo.emptyMessage' | translate }}</label>
-        <p-dropdown [filter]="true" inputId="empty"></p-dropdown>
-    </div>
-    <div class="p-field p-col-12">
-      <p-fileUpload name="demo[]" (onUpload)="onUpload($event)" [multiple]="true">
+    <div class="p-col-6">
+        <div class="p-field p-col-12">
+            <label for="date">{{ 'demo.date' | translate }}</label>
+            <p-calendar inputId="date" [(ngModel)]="date"></p-calendar>
+        </div>
+        <div class="p-field p-col-12">
+            <label for="empty">{{ 'demo.emptyMessage' | translate }}</label>
+            <p-dropdown [filter]="true" inputId="empty"></p-dropdown>
+        </div>
+        <div class="p-field p-col-12">
+            <p-fileUpload name="demo[]" (onUpload)="onUpload($event)" [multiple]="true">
                 <ng-template pTemplate="content">
                     <ul *ngIf="uploadedFiles.length">
                         <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
                     </ul>
                 </ng-template>
-        </p-fileUpload>
+            </p-fileUpload>
+        </div>
+        <div class="p-field p-col-12">
+            <p-table [value]="customers">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>
+                            <div class="p-d-flex p-jc-between p-ai-center">
+                                {{ 'demo.name' | translate }}
+                                <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-customer>
+                    <tr>
+                        <td>
+                            {{customer.name}}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <div class="p-field p-col-12">
+            <p-button (click)="confirm($event)" icon="pi pi-check" [label]="translate.instant('demo.confirm')"></p-button>
+            <p-confirmPopup></p-confirmPopup>
+        </div>
     </div>
-    <div class="p-field p-col-12">
-      <p-table [value]="customers">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>
-                        <div class="p-d-flex p-jc-between p-ai-center">
-                            Name
-                            <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
-                        </div>
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-customer>
-                <tr>
-                    <td>
-                        {{customer.name}}
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </div>
-    <div class="p-field p-col-12">
-      <p-button (click)="confirm($event)" icon="pi pi-check" label="Confirm"></p-button>
-      <p-confirmPopup></p-confirmPopup>
-    </div>
-  </div>
 </div>

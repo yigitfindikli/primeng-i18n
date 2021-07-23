@@ -1,58 +1,68 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  providers: [ConfirmationService]
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css'],
+    providers: [ConfirmationService]
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
 
-  lang: string = "en";
+    lang: string = "en";
 
-  date: any;
+    date: any;
 
-  uploadedFiles: any[] = [];
+    uploadedFiles: any[] = [];
 
-  password: string = "";
+    password: string = "";
 
-  constructor(public translate: TranslateService, public primeNGConfig: PrimeNGConfig, private confirmationService: ConfirmationService) {
-    translate.addLangs(['en', 'fr']);
-    translate.setDefaultLang('en');
+    subscription: Subscription;
 
-    const browserLang = translate.getBrowserLang();
-    let lang = browserLang.match(/en|fr/) ? browserLang : 'en';
-    this.changeLang(lang);
-  }
+    constructor(public translate: TranslateService, public primeNGConfig: PrimeNGConfig, private confirmationService: ConfirmationService) {
+        translate.addLangs(['en', 'fr']);
+        translate.setDefaultLang('en');
 
-  changeLang(lang: string) {
-    this.translate.getTranslation(lang).subscribe(value => {
-      this.translate.use(lang);
-      this.primeNGConfig.setTranslation(value.primeng)
-    })
-  }
+        const browserLang = translate.getBrowserLang();
+        let lang = browserLang.match(/en|fr/) ? browserLang : 'en';
+        this.changeLang(lang);
 
-  onUpload(event: any) {
-    for (let file of event.files) {
-      this.uploadedFiles.push(file);
+        this.subscription = this.translate.stream('primeng').subscribe(data => {
+            this.primeNGConfig.setTranslation(data);
+        });
     }
-  }
 
-  confirm(event: any) {
-    this.confirmationService.confirm({
-      target: event.target,
-      message: this.translate.instant('demo.message'),
-      icon: 'pi pi-exclamation-triangle'
-    });
-  }
+    changeLang(lang: string) {
+        this.translate.use(lang);
+    }
 
-  customers = [
-    { "name": "Yancey" },
-    { "name": "Chilton" },
-    { "name": "Angelo" },
-    { "name": "Carita" },
-    { "name": "Wernher" }
-  ]
+    onUpload(event: any) {
+        for (let file of event.files) {
+            this.uploadedFiles.push(file);
+        }
+    }
+
+    confirm(event: any) {
+        this.confirmationService.confirm({
+            target: event.target,
+            message: this.translate.instant('demo.message'),
+            icon: 'pi pi-exclamation-triangle'
+        });
+    }
+
+    ngOnDestroy() {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+    }
+
+    customers = [
+        { "name": "Yancey" },
+        { "name": "Chilton" },
+        { "name": "Angelo" },
+        { "name": "Carita" },
+        { "name": "Wernher" }
+    ]
 }
